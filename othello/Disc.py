@@ -1,41 +1,22 @@
-from Point import Point
+from dataclasses import dataclass
+from collections import namedtuple
 
 
-class disc_meta(type):
+@dataclass(frozen=True)
+class Point:
     """
-    石の色を表す定数のメタクラス．
+    石の位置を指定する座標系クラス．
 
     Attributes:
-        BLACK (int): 黒石
-        EMPTY (int): 空状態
-        WHITE (int): 白石
-        WALL (int): 壁
+        x (int): x座標．
+        y (int): y座標．
     """
-
-    def __init__(cls, *args, **kwargs):
-        cls.__black: int = 1
-        cls.__empty: int = 0
-        cls.__white: int = -1
-        cls.__wall: int = 2
-
-    @property
-    def BLACK(cls) -> int:
-        return cls.__black
-
-    @property
-    def EMPTY(cls) -> int:
-        return cls.__empty
-
-    @property
-    def WHITE(cls) -> int:
-        return cls.__white
-
-    @property
-    def WALL(cls) -> int:
-        return cls.__wall
+    x: int = 0
+    y: int = 0
 
 
-class Disc(Point, metaclass=disc_meta):
+@dataclass(frozen=True)
+class Disc(Point):
     """
     石の表すクラス．
 
@@ -44,14 +25,14 @@ class Disc(Point, metaclass=disc_meta):
         y (int): y座標．
         color (int): 色．
     """
+    color: int = 0
 
-    def __init__(self, x:int=0, y:int=0, color:int=disc_meta.EMPTY):
-        super().__init__(x, y)
-        self.color = color
+
+DISC_META = namedtuple("__DiscMeta", "BLACK EMPTY WHITE WALL")(1, 0, -1, 2)
 
 
 if __name__ == "__main__":
     d0 = Disc()
     print(d0.x, d0.y, d0.color)
-    d1 = Disc(10, 20, Disc.WHITE)
+    d1 = Disc(10, 20, DISC_META.WHITE)
     print(d1.x, d1.y, d1.color)
