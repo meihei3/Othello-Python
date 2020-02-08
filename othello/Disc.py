@@ -28,11 +28,28 @@ class Disc(Point):
     color: int = 0
 
 
-DISC_META = namedtuple("__DiscMeta", "BLACK EMPTY WHITE WALL")(1, 0, -1, 2)
+@dataclass(frozen=True)
+class Color:
+    """
+    石の色を表すクラス．
+
+    Attributes:
+        BLACK (int): 黒石．
+        EMPTY (int): 空状態．
+        WHITE (int): 白石．
+        WALL (int): 壁．
+    """
+    BLACK: int = 1
+    EMPTY: int = 0
+    WHITE: int = -1
+    WALL: int = 2
+
+
+COLOR = Color()
 
 
 if __name__ == "__main__":
     d0 = Disc()
     print(d0.x, d0.y, d0.color)
-    d1 = Disc(10, 20, DISC_META.WHITE)
+    d1 = Disc(10, 20, COLOR.WHITE)
     print(d1.x, d1.y, d1.color)
