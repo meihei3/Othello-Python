@@ -1,4 +1,5 @@
 from collections import namedtuple
+from dataclasses import dataclass, field
 from typing import List
 
 from Disc import Point, Disc, COLOR
@@ -8,12 +9,12 @@ _BoardInfo = namedtuple("_BoardInfo", "BOARD_SIZE MAX_TURNS")
 _DirBitmask = namedtuple("_DirBitmask", "NONE UPPER UPPER_LEFT LEFT LOWER_LEFT LOWER LOWER_RIGHT RIGHT UPPER_RIGHT")
 
 
+@dataclass
 class ColorStorage:
     """
     石数を保存するクラス．
     """
-    def __init__(self):
-        self.__data: List[int] = [0] * 3
+    __data: List[int] = field(default_factory=lambda: [0]*3, init=False)
 
     def __getitem__(self, key: int):
         if not isinstance(key, int) or key not in (-1, 0, 1):
